@@ -80,7 +80,13 @@ function reverseString(str) {
 // pow(3, 4)    // => 81
 // pow(2, -5)   // => 0.03125
 function pow(base, exponent) {
+    if(exponent === 0) return 1;
 
+    if(exponent > 0){
+        return base * pow(base, exponent - 1);
+    }else{
+        return 1/base * pow(base, exponent + 1);
+    }
 }
 
 
@@ -113,7 +119,11 @@ function pow(base, exponent) {
 //     2-dimensional array: [['some data']]
 //     3-dimensional array: [[['some data']]]
 function flatten(data) {
+    if(!Array.isArray(data)) return data;
 
+    let result = [];
+    data.map(el => result = result.concat(flatten(el)));
+    return result;
 }
 
 // Write a function, fileFinder(directories, targetFile), that accepts an object representing directories and a string respresenting a filename.
@@ -156,7 +166,13 @@ function flatten(data) {
 // fileFinder(desktop, 'everlong.flac');            // => true
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
 function fileFinder(directories, targetFile) {
+  for(let key in directories){
+      if(key === targetFile || fileFinder(directories[key], targetFile)) {
+          return true;
+      }
+  }  
 
+  return false;
 }
 
 
@@ -170,7 +186,17 @@ function fileFinder(directories, targetFile) {
 // pathFinder(desktop, 'everlong.flac'));       // => '/music/genres/rock/everlong.flac'
 // pathFinder(desktop, 'honeybadger.png'));     // => null
 function pathFinder(directories, targetFile) {
+  for (let key in directories) {
+    if (key === targetFile) {
+      return '/'+ key;
+    } 
+    let path = pathFinder(directories[key], targetFile);
+    if(path){
+      return key + path;
+    }
+  }
 
+  return null;
 }
 
 
