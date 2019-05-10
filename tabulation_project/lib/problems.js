@@ -21,7 +21,16 @@
 // stepper([3, 4, 1, 0, 10]);           // => true, because we can step through elements 3 -> 4 -> 10
 // stepper([2, 3, 1, 1, 0, 4, 7, 8])    // => false, there is no way to step to the end
 function stepper(nums) {
-
+	let table = new Array(nums.length).fill(false);
+	table[0] = true;
+	for(let i = 0; i < nums.length; i++){
+		if(!table[i]) continue;
+		let maxJump = nums[i];
+		for(let j = 0; j <= maxJump; j++){
+			table[i+j] = true;
+		}
+	}
+	return table[nums.length -1];
 }
 
 
@@ -36,7 +45,7 @@ function stepper(nums) {
 // maxNonAdjacentSum([2, 7, 9, 3, 4])   // => 15, because 2 + 9 + 4
 // maxNonAdjacentSum([4,2,1,6])         // => 10, because 4 + 6 
 function maxNonAdjacentSum(nums) {
-
+	
 }
 
 
