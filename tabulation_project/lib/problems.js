@@ -79,6 +79,8 @@ function maxNonAdjacentSum(nums) {
 	return table[table.length - 1];
 }
 
+//memoization
+
 
 // Write a function, minChange(coins, amount), that accepts an array of coin values
 // and a target amount as arguments. The method should the minimum number of coins needed
