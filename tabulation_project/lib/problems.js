@@ -76,7 +76,6 @@ function maxNonAdjacentSum(nums) {
 		let notIncludeNumber = table[i - 1];
 		table[i] = Math.max(includeLeftNumber, notIncludeNumber);
 	}
-
 	return table[table.length - 1];
 }
 
