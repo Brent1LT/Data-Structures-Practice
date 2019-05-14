@@ -80,7 +80,14 @@ function maxNonAdjacentSum(nums) {
 }
 
 //memoization
+function maxNonAdjacentSum(nums, memo = {}){
+	if (nums.length === 0) return 0;
+	if (nums.length in memo) return memo[nums.length];
 
+	let firstEle = nums[0];
+	memo[nums.length] = Math.max(firstEle + maxNonAdjacentSum(nums.slice(2), memo), maxNonAdjacentSum(nums.slice(1), memo));
+	return memo[nums.length];
+}
 
 // Write a function, minChange(coins, amount), that accepts an array of coin values
 // and a target amount as arguments. The method should the minimum number of coins needed
@@ -95,7 +102,7 @@ function maxNonAdjacentSum(nums) {
 // minChange([1, 5, 10, 25], 15)    // => 2, because 10 + 5 = 15
 // minChange([1, 5, 10, 25], 100)   // => 4, because 25 + 25 + 25 + 25 = 100
 function minChange(coins, amount) {
-
+	
 }
 
 
