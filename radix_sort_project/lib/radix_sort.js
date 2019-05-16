@@ -1,5 +1,16 @@
 function radixSort(arr) {
-  
+  if(!Array.isArray(arr)) return null;
+  let k = getMaxDigits(arr);
+  let newBucket = arr.slice();
+  for(let i = 0; i < k; i++){
+    let buckets = new Array(10).fill().map(() => new Array());
+    for(let num = 0; num < newBucket.length; num++){
+      let digit = getDigitFrom(newBucket[num], i);
+      buckets[digit].push(newBucket[num]);
+    }
+    newBucket = [].concat(...buckets);
+  }
+  return newBucket;
 }
 
 const getDigitFrom = (num, place) =>{
