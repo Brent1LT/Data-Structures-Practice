@@ -61,7 +61,20 @@
 // -----------
 function hasCycle(linkedList) {
   // TODO: Implement the hasCycle function!
+  let pointer1 = linkedList.head;
+  if(pointer1.next === null) return false;
+  let pointer2 = pointer1.next;
+  
+  while(pointer1 !== null && pointer2 !== null){
+    if(pointer1.value === pointer2.value) return true;
+    if(pointer2.next === null){
+      pointer2 = null;
+    }else pointer2 = pointer2.next.next;
 
+    pointer1 = pointer1.next;
+  }
+
+  return false;
 }
 
 
