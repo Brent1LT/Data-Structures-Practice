@@ -39,9 +39,47 @@
 // -----------
 // Let's code!
 // -----------
-function linkedListIntersection(list1, list2) {
-  // TODO: Implement the hasCycle function!
 
+// O(n * m) solution
+// function linkedListIntersection(list1, list2) {
+//   // TODO: Implement the hasCycle function!
+//   let checked = new Set();
+//   let currentNode = list1.head;
+
+//   while(currentNode !== null){
+//     checked.add(currentNode.value);
+//     currentNode = currentNode.next;
+//   }
+
+//   currentNode = list2.head;
+
+//   while(currentNode !== null){
+//     if(checked.has(currentNode.value)) return currentNode;
+//     currentNode = currentNode.next;
+//   }
+  
+//   return null;
+// }
+
+// O(n) solution
+function linkedListIntersection(list1, list2){
+  let checked = new Set();
+  let currentNode1 = list1.head;
+  let currentNode2 = list2.head;
+
+  while(currentNode1 !== null && currentNode2 !== null){
+    if(checked.has(currentNode1.value)) return currentNode1;
+    if(checked.has(currentNode2.value)) return currentNode2;
+    if(currentNode1.value === currentNode2.value) return currentNode1;
+
+    checked.add(currentNode1.value);
+    checked.add(currentNode2.value);
+
+    currentNode1 = currentNode1.next;
+    currentNode2 = currentNode2.next;
+  }
+
+  return null;
 }
 
 // ----------------------------------------
@@ -97,7 +135,7 @@ var stringify = function(list) {
     list = list.next;
   }
   return result.join("");
-}
+};
 
 exports.Node = Node;
 exports.LinkedList = LinkedList;
