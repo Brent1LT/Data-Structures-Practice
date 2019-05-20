@@ -65,9 +65,11 @@
 // Let's code!
 // -----------
 class Node {
-    constructor(val) {
+    constructor(val, max = null, min = null) {
         this.value = val;
         this.next = null;
+        this.max = max;
+        this.min = min;
     }
 }
 
@@ -77,14 +79,22 @@ class Stack {
         this.top = null;
         this.bottom = null;
         this.length = 0;
+        this.currentMax = null;
+        this.currentMin = null;
     }
 
     push(val) {
-        const newNode = new Node(val);
+        const newNode = new Node(val, this.currentMax, this.currentMin);
         if (!this.top) {
             this.top = newNode;
             this.bottom = newNode;
+            [this.currentMax, this.currentMin] = [newNode, newNode];
         } else {
+            if(val > this.currentMax.value){
+                this.currentMax = newNode;
+            }else if(val < this.currentMin.value){
+                this.currentMin = newNode;
+            }
             const temp = this.top;
             this.top = newNode;
             this.top.next = temp;
@@ -100,16 +110,25 @@ class Stack {
         if (this.top === this.bottom) {
             this.bottom = null;
         }
+        [this.currentMax, this.currentMin] = [temp.max, temp.min];
         this.top = this.top.next;
         this.length--;
-        return temp.value;
+        return temp;
     }
 
     size() {
         return this.length;
     }
+    
+    min(){
+        return this.currentMin;
+    }
+
+    max(){
+        return this.currentMax;
+    }
 }
 
 // Forgetting something down here? 
 exports.Node = Node;
-exports.Stack = Stack;
+exports.MinMaxStack = Stack;
