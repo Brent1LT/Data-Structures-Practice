@@ -82,7 +82,20 @@ function balancedParens(str) {
     ']': '[',
     ')': '('
   };
-  
+  for(let i = 0; i < str.length; i++){
+    let current = str[i];
+    if(Object.values(paren).includes(current)) stack.push(current);
+    if(paren[current]){
+      let matching = stack[stack.length - 1];
+      if(paren[current] === matching){
+        stack.pop();
+        continue;
+      }else return false;
+    }
+  }
+  if(!stack.length){
+    return true;
+  }else return false;
 }
 
 exports.balancedParens = balancedParens;
