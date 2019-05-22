@@ -1,5 +1,5 @@
 function numRegions(graph) {
-
+  
 }
 
 module.exports = {
