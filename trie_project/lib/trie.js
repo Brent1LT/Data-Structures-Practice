@@ -68,6 +68,48 @@ class Trie {
       return true;
     } else return false;
   }
+
+  wordsWithPrefix(word){
+    let q = word.split('');
+    let currentRoot = this.root;
+    let prefix = word;
+    let words = [];
+    
+    while(q.length){
+      let current = q.shift();
+
+      if (!(current in currentRoot.children)){
+        if (q.length) {
+          return [];
+        } else {
+          return [word];
+        }
+      }
+      currentRoot = currentRoot.children[current];
+    }
+
+    for(let child in currentRoot.children){
+      words = words.concat(this.deepRecur(currentRoot.children[child]));
+    }
+
+    return this.deepRecur(currentRoot).map(word =>{
+      return prefix + word;
+    });
+  }
+
+  deepRecur(node){
+    if(Object.keys(node.children).length === 0) return [''];
+
+    let words = [];
+    if(node.isTerminal) words.push('');
+    for(let child in node.children){
+      words = words.concat(this.deepRecur(node.children[child]).map(word =>{
+        return child + word;
+      }));
+    }
+
+    return words;
+  }
 }
 
 module.exports = {
