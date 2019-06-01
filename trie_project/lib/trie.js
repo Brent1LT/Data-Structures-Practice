@@ -167,3 +167,115 @@ let graph = {
 };
 
 
+
+
+
+
+// ///////////////////////////////////////////////////
+
+var seen = new Set();
+
+function dfs(graph, start, result, temp) {
+  if (start === Object.keys(graph).length) {
+    result.push(temp.slice());
+    return;
+  }
+  for (let j = 0; j < graph[start].length; j++) {
+    let node = graph[start][j][0];
+    if (seen.has(node))
+      continue;
+
+    seen.add(node);
+
+    temp.push(node);
+    dfs(graph, node, result, temp);
+    seen.delete(node);
+    temp.pop();
+  }
+}
+let allPathsSourceTarget = function (graph) {
+  const result = [];
+  dfs(graph, 1, result, [1]);
+  return result;
+};
+
+function makeGraph(inputEdges) {
+  let graph = {};
+  inputEdges.forEach(edge => {
+    let [from, to, weight] = edge.split(' ');
+    graph[from] = graph[from] || [];
+    graph[to] = graph[to] || [];
+    graph[from].push([parseInt(to), parseInt(weight)]);
+    graph[to].push([parseInt(from), parseInt(weight)]);
+  });
+  return graph;
+}
+
+function getNodesOnShortestPaths(inputEdges) {
+  let graph = makeGraph(inputEdges);
+  let allPaths = allPathsSourceTarget(graph);
+
+  let distances = allPaths.map(path => {
+    let total = 0;
+    for (let i = 0; i < path.length - 1; i++) {
+      let start = path[i];
+      let end = path[i + 1];
+      let nodes = graph[start];
+      node = nodes.filter(n => n[0] === end)[0];
+      total += node[1];  //get distance to that node
+    }
+    return total;
+  });
+  let minDistance = Math.min(...distances);
+
+
+  let filteredPaths = allPaths.filter(path => {
+    let total = 0;
+    for (let i = 0; i < path.length - 1; i++) {
+      let start = path[i];
+      let end = path[i + 1];
+      let nodes = graph[start];
+      node = nodes.filter(n => n[0] === end)[0];
+      total += node[1];
+    }
+    return total === minDistance;
+  });
+
+
+  let shortestPathEdges = new Set();
+  filteredPaths.forEach(path => {
+    for (let i = 0; i < path.length - 1; i++) {
+      let start = path[i];
+      let end = path[i + 1];
+      shortestPathEdges.add(JSON.stringify([start, end]));
+      shortestPathEdges.add(JSON.stringify([end, start]));
+    }
+  });
+
+  let final = [];
+  inputEdges.forEach(edge => {
+    let [from, to, weight] = edge.split(' ');
+    let strEdge = `[${from},${to}]`;
+    if (shortestPathEdges.has(strEdge)) {
+      final.push('YES');
+    } else {
+      final.push('NO');
+    }
+  });
+  return final;
+}
+
+let inputEdges = [
+  '1 2 1',
+  '2 3 1',
+  '3 4 1',
+  '4 5 1',
+  '5 1 3',
+  '1 3 2',
+  '5 3 1'
+];
+
+let result = getNodesOnShortestPaths(inputEdges);
+result
+
+//////////////////////////////////////////
