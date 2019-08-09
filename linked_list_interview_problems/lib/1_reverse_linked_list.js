@@ -62,18 +62,18 @@
 // -----------
 function reverseLinkedList(linkedList) {
   // TODO: Implement the reverseLinkedList function!
-  let reversed = linkedList.head;
-  if(reversed.next === null) return linkedList;
-  linkedList.head = linkedList.tail;
-  linkedList.tail = reversed;
-  recursiveReverse(linkedList.tail); 
+  // console.log(linkedList);
+  [linkedList.head, linkedList.tail] = [linkedList.tail, linkedList.head];
+
+  recurReverse(linkedList.tail);
   linkedList.tail.next = null;
+  // console.log(linkedList);
   return linkedList;
 }
 
-function recursiveReverse(root){
-  if(root.next === null) return root;
-  let nextNode = recursiveReverse(root.next);
+function recurReverse(root) {
+  if (root.next === null) return root;
+  let nextNode = recurReverse(root.next);
   nextNode.next = root;
   return root;
 }
