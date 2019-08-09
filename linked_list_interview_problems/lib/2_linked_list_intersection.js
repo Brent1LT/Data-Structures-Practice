@@ -40,7 +40,7 @@
 // Let's code!
 // -----------
 
-// O(n * m) solution
+// O(n + m) solution
 // function linkedListIntersection(list1, list2) {
 //   // TODO: Implement the hasCycle function!
 //   let checked = new Set();
