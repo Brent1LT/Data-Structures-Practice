@@ -62,12 +62,10 @@
 // -----------
 function reverseLinkedList(linkedList) {
   // TODO: Implement the reverseLinkedList function!
-  // console.log(linkedList);
   [linkedList.head, linkedList.tail] = [linkedList.tail, linkedList.head];
 
   recurReverse(linkedList.tail);
   linkedList.tail.next = null;
-  // console.log(linkedList);
   return linkedList;
 }
 
